@@ -7,9 +7,12 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.*;
 
 public class GameOfLife {
+    private static final int MIN_SPEED = 20;
 
-    Display display;
-    Shell shell;
+    private Display display;
+    private Shell shell;
+    private int speed = MIN_SPEED;
+
 
     public GameOfLife() {
         initComponents();
@@ -41,20 +44,49 @@ public class GameOfLife {
         Label speedLabel = new Label(shell, SWT.NONE);
         speedLabel.setText("Speed:");
 
-        Slider slide = new Slider(shell, SWT.HORIZONTAL);
-        slide.setMinimum(0);
-        slide.setMaximum(2000);
-        slide.setIncrement(10);
+        Slider slider = new Slider(shell, SWT.HORIZONTAL);
+        slider.setMinimum(MIN_SPEED);
+        slider.setMaximum(2000);
+        slider.setIncrement(10);
+        slider.getData();
+        slider.addListener(SWT.Selection, event -> speed = slider.getSelection());
     }
 
     public void start() {
         shell.pack();
         shell.open();
+
+        initCells();
+
+        display.syncExec(new MainLoop());
+
         while (!shell.isDisposed()) {
             if (!display.readAndDispatch()) {
                 display.sleep();
             }
         }
         display.dispose();
+    }
+
+    private void initCells(){
+        //TODO
+    }
+
+    private void displayCells() {
+        //TODO
+    }
+
+    private void updateCells() {
+        //TODO
+    }
+
+    private class MainLoop implements Runnable {
+        @Override
+        public void run() {
+            System.out.println(speed);
+            displayCells();
+            updateCells();
+            display.timerExec(speed,this);
+        }
     }
 }
