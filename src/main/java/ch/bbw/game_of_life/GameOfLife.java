@@ -12,9 +12,11 @@ public class GameOfLife {
     private Display display;
     private Shell shell;
     private int speed = MIN_SPEED;
+    private Status status;
 
 
     public GameOfLife() {
+        status = Status.PAUSED;
         initComponents();
     }
 
@@ -36,10 +38,12 @@ public class GameOfLife {
         playButton.setText("Play");
         playButton.setImage(new Image(display, Main.class.getClassLoader().getResourceAsStream("icons/play.png")));
         playButton.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, true, false, 1, 1));
+        playButton.addListener(SWT.Selection, event -> status = Status.PLAYING);
 
         Button stopButton = new Button(shell, SWT.NONE);
         stopButton.setText("Stop");
         stopButton.setImage(new Image(display, Main.class.getClassLoader().getResourceAsStream("icons/stop.png")));
+        stopButton.addListener(SWT.Selection, event -> status = Status.PAUSED);
 
         Label speedLabel = new Label(shell, SWT.NONE);
         speedLabel.setText("Speed:");
@@ -83,10 +87,14 @@ public class GameOfLife {
     private class MainLoop implements Runnable {
         @Override
         public void run() {
-            System.out.println(speed);
-            displayCells();
-            updateCells();
-            display.timerExec(speed,this);
+            if (status == Status.PLAYING) {
+                System.out.println(speed);
+                displayCells();
+                updateCells();
+                display.timerExec(speed, this);
+            } else {
+                display.timerExec(100, this);
+            }
         }
     }
 }
