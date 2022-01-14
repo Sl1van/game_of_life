@@ -15,7 +15,9 @@ public class GameOfLife {
     private Shell shell;
     private int speed = MIN_SPEED;
     private Status status;
-    private boolean[][] cells = new boolean[50][50]; //x and y
+    private final int  canvasCellWidth = 50;
+    private final int canvasCellHeigth = 50;
+    private boolean[][] cells = new boolean[canvasCellWidth][canvasCellHeigth]; //x and y
 
 
     public GameOfLife() {
@@ -95,7 +97,50 @@ public class GameOfLife {
     }
 
     private void updateCells() {
-        //TODO
+        boolean[][] updatedCells = Arrays.copyOf(cells, cells.length);
+        for (int x = 0; x < 10; x++) {
+            for (int y = 0; y < 10; y++) {
+                if (amountOfLivingCellsAroundCell(x, y) < 2 || amountOfLivingCellsAroundCell(x, y) > 3) {
+                    updatedCells[x][y] = false;
+                    continue;
+                } else if (amountOfLivingCellsAroundCell(x, y) == 3) {
+                    updatedCells[x][y] = true;
+                }
+                //cell just stays alive if no other if statement was true
+            }
+        }
+        cells = updatedCells;
+    }
+
+    private int amountOfLivingCellsAroundCell(int x, int y){
+        int livingCells = 0;
+
+        if(x != 0 && cells[x-1][y]){
+            livingCells++;
+        }
+        if(y!= 0 && cells[x][y-1]){
+            livingCells++;
+        }
+        if(x != 0&& y!= 0 && cells[x-1][y-1]){
+            livingCells++;
+        }
+        if(x != canvasCellWidth -1 && cells[x+1][y]){
+            livingCells++;
+        }
+        if(y != canvasCellHeigth-1 && cells[x][y+1]){
+            livingCells++;
+        }
+        if(x != canvasCellWidth -1 && y != canvasCellHeigth-1 && cells[x+1][y+1]){
+            livingCells++;
+        }
+        if(x != 0 && y != canvasCellHeigth-1 && cells[x-1][y+1]){
+            livingCells++;
+        }
+        if(x != canvasCellWidth -1 && y != 0 && cells[x+1][y-1]){
+            livingCells++;
+        }
+
+        return livingCells;
     }
 
     private void printCells(){
