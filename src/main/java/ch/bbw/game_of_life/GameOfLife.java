@@ -16,8 +16,8 @@ public class GameOfLife {
     private int speed = MIN_SPEED;
     private Status status;
     private final int  canvasCellWidth = 50;
-    private final int canvasCellHeigth = 50;
-    private boolean[][] cells = new boolean[canvasCellWidth][canvasCellHeigth]; //x and y
+    private final int canvasCellHeight = 50;
+    private boolean[][] cells = new boolean[canvasCellWidth][canvasCellHeight]; //x and y
     private final boolean useGui;
 
 
@@ -135,13 +135,13 @@ public class GameOfLife {
         if(x != canvasCellWidth -1 && cells[x+1][y]){
             livingCells++;
         }
-        if(y != canvasCellHeigth-1 && cells[x][y+1]){
+        if(y != canvasCellHeight -1 && cells[x][y+1]){
             livingCells++;
         }
-        if(x != canvasCellWidth -1 && y != canvasCellHeigth-1 && cells[x+1][y+1]){
+        if(x != canvasCellWidth -1 && y != canvasCellHeight -1 && cells[x+1][y+1]){
             livingCells++;
         }
-        if(x != 0 && y != canvasCellHeigth-1 && cells[x-1][y+1]){
+        if(x != 0 && y != canvasCellHeight -1 && cells[x-1][y+1]){
             livingCells++;
         }
         if(x != canvasCellWidth -1 && y != 0 && cells[x+1][y-1]){
