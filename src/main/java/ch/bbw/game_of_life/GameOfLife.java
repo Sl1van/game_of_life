@@ -106,8 +106,8 @@ public class GameOfLife {
 
     private void updateCells() {
         boolean[][] updatedCells = Arrays.copyOf(cells, cells.length);
-        for (int x = 0; x < 10; x++) {
-            for (int y = 0; y < 10; y++) {
+        for (int x = 0; x < canvasCellWidth; x++) {
+            for (int y = 0; y < canvasCellHeight; y++) {
                 if (amountOfLivingCellsAroundCell(x, y) < 2 || amountOfLivingCellsAroundCell(x, y) > 3) {
                     updatedCells[x][y] = false;
                     continue;
