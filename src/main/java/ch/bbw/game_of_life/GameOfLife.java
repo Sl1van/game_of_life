@@ -18,16 +18,15 @@ public class GameOfLife {
     private final int  canvasCellWidth = 50;
     private final int canvasCellHeigth = 50;
     private boolean[][] cells = new boolean[canvasCellWidth][canvasCellHeigth]; //x and y
+    private final boolean useGui;
 
 
-    public GameOfLife() {
-//        status = Status.PAUSED;
-//        initComponents();
-
-
-        initCells();
-        status = Status.PLAYING;
-        new MainLoop().run();
+    public GameOfLife(boolean useGui) {
+        this.useGui = useGui;
+        if (useGui) {
+            status = Status.PAUSED;
+            initComponents();
+        }
     }
 
     private void initComponents() {
@@ -67,20 +66,26 @@ public class GameOfLife {
     }
 
     public void start() {
-        shell.pack();
-        shell.open();
+        if (useGui) {
+            shell.pack();
+            shell.open();
 
-        initCells();
-        displayCells();
+            initCells();
+            displayCells();
 
-        display.timerExec(speed, new MainLoop());
+            display.timerExec(speed, new MainLoop());
 
-        while (!shell.isDisposed()) {
-            if (!display.readAndDispatch()) {
-                display.sleep();
+            while (!shell.isDisposed()) {
+                if (!display.readAndDispatch()) {
+                    display.sleep();
+                }
             }
+            display.dispose();
+        } else {
+            initCells();
+            status = Status.PLAYING;
+            new MainLoop().run();
         }
-        display.dispose();
     }
 
     private void initCells(){
@@ -92,8 +97,11 @@ public class GameOfLife {
     }
 
     private void displayCells() {
-        //TODO
-        printCells();
+        if (useGui) {
+            //TODO
+        } else {
+            printCells();
+        }
     }
 
     private void updateCells() {
@@ -166,8 +174,11 @@ public class GameOfLife {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                this.run();
-//                display.timerExec(speed, this);
+                if (useGui) {
+                    display.timerExec(speed, this);
+                } else {
+                    this.run();
+                }
             } else {
                 display.timerExec(100, this);
             }
