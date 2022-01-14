@@ -13,6 +13,7 @@ public class GameOfLife {
     private Shell shell;
     private int speed = MIN_SPEED;
     private Status status;
+    private boolean[][] cells = new boolean[50][50]; //x and y
 
 
     public GameOfLife() {
@@ -61,8 +62,9 @@ public class GameOfLife {
         shell.open();
 
         initCells();
+        displayCells();
 
-        display.syncExec(new MainLoop());
+        display.timerExec(speed, new MainLoop());
 
         while (!shell.isDisposed()) {
             if (!display.readAndDispatch()) {
@@ -73,7 +75,11 @@ public class GameOfLife {
     }
 
     private void initCells(){
-        //TODO
+        for (int x = 0; x < 10; x++) {
+            for (int y = 0; y < 10; y++) {
+                cells[x][y] = true;
+            }
+        }
     }
 
     private void displayCells() {
