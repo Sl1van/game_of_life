@@ -6,6 +6,8 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.*;
 
+import java.util.Arrays;
+
 public class GameOfLife {
     private static final int MIN_SPEED = 20;
 
@@ -17,8 +19,13 @@ public class GameOfLife {
 
 
     public GameOfLife() {
-        status = Status.PAUSED;
-        initComponents();
+//        status = Status.PAUSED;
+//        initComponents();
+
+
+        initCells();
+        status = Status.PLAYING;
+        new MainLoop().run();
     }
 
     private void initComponents() {
@@ -84,20 +91,38 @@ public class GameOfLife {
 
     private void displayCells() {
         //TODO
+        printCells();
     }
 
     private void updateCells() {
         //TODO
     }
 
+    private void printCells(){
+        System.out.println("#################################################");
+        for (boolean[] x : cells)
+        {
+            for (boolean y : x)
+            {
+                System.out.print(y?"X":" ");
+            }
+            System.out.println();
+        }
+    }
+
     private class MainLoop implements Runnable {
         @Override
         public void run() {
             if (status == Status.PLAYING) {
-                System.out.println(speed);
                 displayCells();
                 updateCells();
-                display.timerExec(speed, this);
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                this.run();
+//                display.timerExec(speed, this);
             } else {
                 display.timerExec(100, this);
             }
