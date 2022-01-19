@@ -11,6 +11,12 @@ import java.util.Arrays;
 public class GameOfLife {
     private static final int MIN_SPEED = 20;
 
+    private final int canvasCellHeight = 50;
+    private final int canvasCellWidth = 50;
+    private final int canvasHeight = 500;
+    private final int canvasWidth = 500;
+    private final boolean useGui;
+
     private Display display;
     private Shell shell;
     private int speed = MIN_SPEED;
@@ -37,11 +43,33 @@ public class GameOfLife {
         shell.setLayout(shellLayout);
         shell.setText("Game of life");
 
-        Canvas canvas = new Canvas(shell, SWT.NO_BACKGROUND | SWT.DOUBLE_BUFFERED);
+        canvas = new Canvas(shell, SWT.DOUBLE_BUFFERED);
         GridData canvasGridData = new GridData(SWT.FILL, SWT.FILL, true, true, 4, 1);
-        canvasGridData.heightHint = 500;
-        canvasGridData.widthHint = 500;
+        canvasGridData.heightHint = canvasHeight;
+        canvasGridData.widthHint = canvasWidth;
         canvas.setLayoutData(canvasGridData);
+        canvas.setBackground(new Color(display, new RGB(0,0,0)));
+        canvas.addPaintListener(event -> {
+
+//            Rectangle clientArea = canvas.getClientArea();
+//            event.gc.setBackground(display.getSystemColor(SWT.COLOR_CYAN));
+//            event.gc.fillRectangle(10,10,100,100);
+
+            int cellWidth = canvasWidth / canvasCellWidth;
+            int cellHeight = canvasHeight / canvasCellHeight;
+            for (int x = 0; x < canvasCellWidth; x++) {
+                for (int y = 0; y < canvasCellHeight; y++) {
+//                    int xCoordinateOnCanvas = x * cellWidth
+                    if (cells[x][y]) {
+                        event.gc.setBackground(new Color(display, new RGB(255,255,255)));
+                        event.gc.fillRectangle(x * cellWidth, y * cellHeight, cellWidth, cellHeight);
+                    } else {
+                        event.gc.setBackground(new Color(display, new RGB(0,0,0)));
+                        event.gc.fillRectangle(x * cellWidth, y * cellHeight, cellWidth, cellHeight);
+                    }
+                }
+            }
+        });
 
         Button playButton = new Button(shell, SWT.NONE);
         playButton.setText("Play");
@@ -98,7 +126,9 @@ public class GameOfLife {
 
     private void displayCells() {
         if (useGui) {
-            //TODO
+            canvas.redraw();
+            canvas.layout();
+            canvas.update();
         } else {
             printCells();
         }
