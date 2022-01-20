@@ -50,16 +50,10 @@ public class GameOfLife {
         canvas.setLayoutData(canvasGridData);
         canvas.setBackground(new Color(display, new RGB(0, 0, 0)));
         canvas.addPaintListener(event -> {
-
-//            Rectangle clientArea = canvas.getClientArea();
-//            event.gc.setBackground(display.getSystemColor(SWT.COLOR_CYAN));
-//            event.gc.fillRectangle(10,10,100,100);
-
             int cellWidth = canvasWidth / canvasCellWidth;
             int cellHeight = canvasHeight / canvasCellHeight;
             for (int x = 0; x < canvasCellWidth; x++) {
                 for (int y = 0; y < canvasCellHeight; y++) {
-//                    int xCoordinateOnCanvas = x * cellWidth
                     if (cells[x][y]) {
                         event.gc.setBackground(new Color(display, new RGB(255, 255, 255)));
                         event.gc.fillRectangle(x * cellWidth, y * cellHeight, cellWidth, cellHeight);
@@ -192,7 +186,6 @@ public class GameOfLife {
         if (x != canvasCellWidth - 1 && y != 0 && cells[x + 1][y - 1]) {
             livingCells++;
         }
-        //System.out.println(!isEqualWithCells(testcells));
         return livingCells;
     }
 
@@ -207,30 +200,6 @@ public class GameOfLife {
         }
     }
 
-    private void printCells(boolean[][] otherCells) {
-        System.out.println("#################################################");
-
-        for (int y = 0; y < canvasCellWidth; y++) {
-            for (int x = 0; x < canvasCellHeight; x++) {
-                System.out.print(otherCells[x][y] ? "X" : " ");
-            }
-            System.out.println();
-        }
-    }
-
-
-    public boolean isEqualWithCells(boolean[][] otherCells) {
-        for (int y = 0; y < canvasCellWidth; y++) {
-            for (int x = 0; x < canvasCellHeight; x++) {
-                if (cells[x][y] != otherCells[x][y]) {
-                    return false;
-                }
-            }
-        }
-
-        return true;
-    }
-
     private class MainLoop implements Runnable {
         @Override
         public void run() {
@@ -238,7 +207,6 @@ public class GameOfLife {
                 displayCells();
                 updateCells();
                 if (useGui) {
-                    System.out.println(speed);
                     display.timerExec(speed, this);
                 } else {
                     try {
