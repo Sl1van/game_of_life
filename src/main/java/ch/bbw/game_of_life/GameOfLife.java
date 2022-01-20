@@ -203,6 +203,9 @@ public class GameOfLife {
     private class MainLoop implements Runnable {
         @Override
         public void run() {
+            if(shell.isDisposed()){
+                return;
+            }
             if (status == Status.PLAYING) {
                 displayCells();
                 updateCells();
