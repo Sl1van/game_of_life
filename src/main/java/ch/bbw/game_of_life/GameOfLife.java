@@ -1,7 +1,9 @@
 package ch.bbw.game_of_life;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.*;
@@ -21,8 +23,6 @@ public class GameOfLife {
     private Shell shell;
     private int speed = MIN_SPEED;
     private Status status;
-    private final int  canvasCellWidth = 50;
-    private final int canvasCellHeight = 50;
     private boolean[][] cells = new boolean[canvasCellWidth][canvasCellHeight]; //x and y
     private Canvas canvas;
 
@@ -48,7 +48,7 @@ public class GameOfLife {
         canvasGridData.heightHint = canvasHeight;
         canvasGridData.widthHint = canvasWidth;
         canvas.setLayoutData(canvasGridData);
-        canvas.setBackground(new Color(display, new RGB(0,0,0)));
+        canvas.setBackground(new Color(display, new RGB(0, 0, 0)));
         canvas.addPaintListener(event -> {
 
 //            Rectangle clientArea = canvas.getClientArea();
@@ -61,10 +61,10 @@ public class GameOfLife {
                 for (int y = 0; y < canvasCellHeight; y++) {
 //                    int xCoordinateOnCanvas = x * cellWidth
                     if (cells[x][y]) {
-                        event.gc.setBackground(new Color(display, new RGB(255,255,255)));
+                        event.gc.setBackground(new Color(display, new RGB(255, 255, 255)));
                         event.gc.fillRectangle(x * cellWidth, y * cellHeight, cellWidth, cellHeight);
                     } else {
-                        event.gc.setBackground(new Color(display, new RGB(0,0,0)));
+                        event.gc.setBackground(new Color(display, new RGB(0, 0, 0)));
                         event.gc.fillRectangle(x * cellWidth, y * cellHeight, cellWidth, cellHeight);
                     }
                 }
@@ -165,34 +165,34 @@ public class GameOfLife {
         cells = updatedCells;
     }
 
-    private int amountOfLivingCellsAroundCell(int x, int y){
+    private int amountOfLivingCellsAroundCell(int x, int y) {
         int livingCells = 0;
 
-        if(x != 0 && cells[x-1][y]){
+        if (x != 0 && cells[x - 1][y]) {
             livingCells++;
         }
-        if(y!= 0 && cells[x][y-1]){
+        if (y != 0 && cells[x][y - 1]) {
             livingCells++;
         }
-        if(x != 0&& y!= 0 && cells[x-1][y-1]){
+        if (x != 0 && y != 0 && cells[x - 1][y - 1]) {
             livingCells++;
         }
-        if(x != canvasCellWidth -1 && cells[x+1][y]){
+        if (x != canvasCellWidth - 1 && cells[x + 1][y]) {
             livingCells++;
         }
-        if(y != canvasCellHeight -1 && cells[x][y+1]){
+        if (y != canvasCellHeight - 1 && cells[x][y + 1]) {
             livingCells++;
         }
-        if(x != canvasCellWidth -1 && y != canvasCellHeight -1 && cells[x+1][y+1]){
+        if (x != canvasCellWidth - 1 && y != canvasCellHeight - 1 && cells[x + 1][y + 1]) {
             livingCells++;
         }
-        if(x != 0 && y != canvasCellHeight -1 && cells[x-1][y+1]){
+        if (x != 0 && y != canvasCellHeight - 1 && cells[x - 1][y + 1]) {
             livingCells++;
         }
-        if(x != canvasCellWidth -1 && y != 0 && cells[x+1][y-1]){
+        if (x != canvasCellWidth - 1 && y != 0 && cells[x + 1][y - 1]) {
             livingCells++;
         }
-
+        //System.out.println(!isEqualWithCells(testcells));
         return livingCells;
     }
 
