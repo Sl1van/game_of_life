@@ -198,14 +198,15 @@ public class GameOfLife {
             if (status == Status.PLAYING) {
                 displayCells();
                 updateCells();
-                try {
-                    Thread.sleep(500);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
                 if (useGui) {
+                    System.out.println(speed);
                     display.timerExec(speed, this);
                 } else {
+                    try {
+                        Thread.sleep(500);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                     this.run();
                 }
             } else {
