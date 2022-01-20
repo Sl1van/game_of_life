@@ -24,7 +24,7 @@ public class GameOfLife {
     private final int  canvasCellWidth = 50;
     private final int canvasCellHeight = 50;
     private boolean[][] cells = new boolean[canvasCellWidth][canvasCellHeight]; //x and y
-    private final boolean useGui;
+    private Canvas canvas;
 
 
     public GameOfLife(boolean useGui) {
@@ -116,12 +116,26 @@ public class GameOfLife {
         }
     }
 
-    private void initCells(){
-        for (int x = 0; x < 10; x++) {
-            for (int y = 0; y < 10; y++) {
-                cells[x][y] = true;
-            }
-        }
+
+    private void initCells() {
+//        for (int x = 0; x < 4; x++) {
+//            for (int y = 0; y < 4; y++) {
+//                cells[x][y] = true;
+//            }
+//        }
+        //location of starting point
+        int x = canvasCellWidth / 2;
+        int y = canvasCellHeight / 2;
+
+//        cells[x][y-1] = true;
+//        cells[x-1][y-1] = true;
+//        cells[x+1][y-1] = true;
+//        cells[x-1][y] = true;
+//        cells[x][y+1] = true;
+
+        cells[x][y] = true;
+        cells[x][y + 1] = true;
+        cells[x][y - 1] = true;
     }
 
     private void displayCells() {
@@ -190,6 +204,30 @@ public class GameOfLife {
             }
             System.out.println();
         }
+    }
+
+    private void printCells(boolean[][] otherCells) {
+        System.out.println("#################################################");
+
+        for (int y = 0; y < canvasCellWidth; y++) {
+            for (int x = 0; x < canvasCellHeight; x++) {
+                System.out.print(otherCells[x][y] ? "X" : " ");
+            }
+            System.out.println();
+        }
+    }
+
+
+    public boolean isEqualWithCells(boolean[][] otherCells) {
+        for (int y = 0; y < canvasCellWidth; y++) {
+            for (int x = 0; x < canvasCellHeight; x++) {
+                if (cells[x][y] != otherCells[x][y]) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
     }
 
     private class MainLoop implements Runnable {
