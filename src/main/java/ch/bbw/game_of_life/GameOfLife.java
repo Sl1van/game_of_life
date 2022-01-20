@@ -181,13 +181,12 @@ public class GameOfLife {
         return livingCells;
     }
 
-    private void printCells(){
+    private void printCells() {
         System.out.println("#################################################");
-        for (boolean[] x : cells)
-        {
-            for (boolean y : x)
-            {
-                System.out.print(y?"X":" ");
+
+        for (int y = 0; y < canvasCellWidth; y++) {
+            for (int x = 0; x < canvasCellHeight; x++) {
+                System.out.print(cells[x][y] ? "X" : " ");
             }
             System.out.println();
         }
