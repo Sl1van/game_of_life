@@ -149,7 +149,8 @@ public class GameOfLife {
     }
 
     private void updateCells() {
-        boolean[][] updatedCells = Arrays.copyOf(cells, cells.length);
+        //create a clone of each array in the 2d array
+        boolean[][] updatedCells = Arrays.stream(cells).map(boolean[]::clone).toArray(boolean[][]::new);
         for (int x = 0; x < canvasCellWidth; x++) {
             for (int y = 0; y < canvasCellHeight; y++) {
                 if (amountOfLivingCellsAroundCell(x, y) < 2 || amountOfLivingCellsAroundCell(x, y) > 3) {
