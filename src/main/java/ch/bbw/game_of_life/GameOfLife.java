@@ -9,6 +9,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.*;
 
 import java.util.Arrays;
+import java.util.Random;
 
 public class GameOfLife {
     private static final int MIN_SPEED = 20;
@@ -112,24 +113,12 @@ public class GameOfLife {
 
 
     private void initCells() {
-//        for (int x = 0; x < 4; x++) {
-//            for (int y = 0; y < 4; y++) {
-//                cells[x][y] = true;
-//            }
-//        }
-        //location of starting point
-        int x = canvasCellWidth / 2;
-        int y = canvasCellHeight / 2;
-
-//        cells[x][y-1] = true;
-//        cells[x-1][y-1] = true;
-//        cells[x+1][y-1] = true;
-//        cells[x-1][y] = true;
-//        cells[x][y+1] = true;
-
-        cells[x][y] = true;
-        cells[x][y + 1] = true;
-        cells[x][y - 1] = true;
+        Random random = new Random();
+        for (int x = 0; x < canvasCellWidth; x++) {
+            for (int y = 0; y < canvasCellHeight; y++) {
+                cells[x][y] = random.nextBoolean();
+            }
+        }
     }
 
     private void displayCells() {
