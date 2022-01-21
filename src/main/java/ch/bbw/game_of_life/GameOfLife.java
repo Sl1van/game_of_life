@@ -40,12 +40,12 @@ public class GameOfLife {
         display = new Display();
 
         shell = new Shell(display, SWT.CLOSE | SWT.TITLE | SWT.MIN);
-        GridLayout shellLayout = new GridLayout(4, false);
+        GridLayout shellLayout = new GridLayout(5, false);
         shell.setLayout(shellLayout);
         shell.setText("Game of life");
 
         canvas = new Canvas(shell, SWT.DOUBLE_BUFFERED);
-        GridData canvasGridData = new GridData(SWT.FILL, SWT.FILL, true, true, 4, 1);
+        GridData canvasGridData = new GridData(SWT.FILL, SWT.FILL, true, true, 5, 1);
         canvasGridData.heightHint = canvasHeight;
         canvasGridData.widthHint = canvasWidth;
         canvas.setLayoutData(canvasGridData);
