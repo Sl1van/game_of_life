@@ -77,6 +77,14 @@ public class GameOfLife {
         stopButton.setImage(new Image(display, Main.class.getClassLoader().getResourceAsStream("icons/stop.png")));
         stopButton.addListener(SWT.Selection, event -> status = Status.PAUSED);
 
+        Button resetButton = new Button(shell, SWT.NONE);
+        resetButton.setText("Restart");
+        resetButton.setImage(new Image(display, Main.class.getClassLoader().getResourceAsStream("icons/restart.png")));
+        resetButton.addListener(SWT.Selection, event -> {
+            initCells();
+            displayCells();
+        });
+
         Label speedLabel = new Label(shell, SWT.NONE);
         speedLabel.setText("Speed:");
 
