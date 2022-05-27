@@ -8,31 +8,59 @@
     <artifactId>game_of_life</artifactId>
     <version>1.0-SNAPSHOT</version>
 
-    <dependencies>
-        <!--uncomment the correct dependency for your os-->
-        <!--windows x86_64-->
-        <dependency>
-            <groupId>org.eclipse.swt</groupId>
-            <artifactId>org.eclipse.swt.win32.win32.x86_64</artifactId>
-            <version>4.3</version>
-        </dependency>
-        <!--linux x86_64-->
-        <!--<dependency>
-            <groupId>org.eclipse.swt</groupId>
-            <artifactId>org.eclipse.swt.gtk.linux.x86_64</artifactId>
-            <version>4.3</version>
-        </dependency>-->
-        <!--macOs x86_64-->
-        <!--<dependency>
-            <groupId>org.eclipse.swt</groupId>
-            <artifactId>org.eclipse.swt.cocoa.macosx.x86_64</artifactId>
-            <version>4.3</version>
-        </dependency>-->
-    </dependencies>
-
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
     </properties>
 
+    <profiles>
+        <profile>
+            <id>linux.x86_64</id>
+            <activation>
+                <os>
+                    <family>unix</family>
+                    <arch>amd64</arch>
+                </os>
+            </activation>
+            <dependencies>
+                <dependency>
+                    <groupId>org.eclipse.swt</groupId>
+                    <artifactId>org.eclipse.swt.gtk.linux.x86_64</artifactId>
+                    <version>4.3</version>
+                </dependency>
+            </dependencies>
+        </profile>
+        <profile>
+            <id>windows-10</id>
+            <activation>
+                <os>
+                    <family>Windows</family>
+                    <arch>amd64</arch>
+                </os>
+            </activation>
+            <dependencies>
+                        <dependency>
+                            <groupId>org.eclipse.swt</groupId>
+                            <artifactId>org.eclipse.swt.win32.win32.x86_64</artifactId>
+                            <version>4.3</version>
+                        </dependency>
+            </dependencies>
+        </profile>
+        <profile>
+            <id>macOS</id>
+            <activation>
+                <os>
+                    <family>mac</family>
+                    <arch>amd64</arch>
+                </os>
+            </activation>
+            <dependencies>
+<!--                <dependency>-->
+<!--                    <groupId>org.eclipse.swt</groupId>-->
+<!--                    <artifactId>org.eclipse.swt.cocoa.macosx.x86_64</artifactId>-->
+<!--                    <version>4.3</version>-->
+<!--                </dependency>-->
+            </dependencies>
+        </profile>
+    </profiles>
 </project>
