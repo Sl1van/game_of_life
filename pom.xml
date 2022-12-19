@@ -13,9 +13,30 @@
         <maven.compiler.target>11</maven.compiler.target>
     </properties>
 
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>3.3.0</version>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <mainClass>ch.bbw.game_of_life.Main</mainClass>
+                        </manifest>
+                    </archive>
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+
     <profiles>
         <profile>
-            <id>linux.x86_64</id>
+            <id>linux_x86_64</id>
             <activation>
                 <os>
                     <family>unix</family>
@@ -31,7 +52,7 @@
             </dependencies>
         </profile>
         <profile>
-            <id>windows-10</id>
+            <id>windows_x86_64</id>
             <activation>
                 <os>
                     <family>Windows</family>
@@ -47,7 +68,7 @@
             </dependencies>
         </profile>
         <profile>
-            <id>macOS</id>
+            <id>macOS_x86_64</id>
             <activation>
                 <os>
                     <family>mac</family>
